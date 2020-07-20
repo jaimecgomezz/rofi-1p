@@ -64,7 +64,7 @@ print_missing_dependency() {
 
 get_field_from_option() {
   echo "$1" \
-    | grep -Eo "( [a-z]+([A-Z]?[a-z]+)+)*" \
+    | awk '{$1=$2=$NF="";print}' \
     | awk '{$1=$1};1';
 }
 

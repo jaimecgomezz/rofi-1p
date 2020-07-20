@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+
+MAX_ATTEMPTS=3
+ATTEMPTS_MADE=0
+AUTH_TIMEOUT=10
+OP_PATH=~/.op
+JOBS_FILE="$OP_PATH/jobs"
+SESSION_FILE="$OP_PATH/session"
+PINENTRY="
+SETTITLE rofi-1p
+SETTIMEOUT 10
+SETDESC Enter your master password:
+SETPROMPT
+GETPIN
+"
+
+source_access_token() {
+  source "$SESSION_FILE" > /dev/null 2>&1;
+}
+
+handle_attempts() {
+  [ "$ATTEMPTS_MADE" -eq "$MAX_ATTEMPTS" ] \
+    && exit 1 \
+    || ATTEMPTS_MADE="$(($ATTEMPTS_MADE + 1))";
+}
+
+is_access_granted() {
+  source_access_token
+  [ -f "$SESSION_FILE" ] \
+    && [ -s "$SESSION_FILE" ] \
+    && op list vaults > /dev/null 2>&1 \
+    && return
+  false
+}
+
+request_password() {
+  echo "$PINENTRY" | pinentry | grep -oP 'D \K.*' | op signin my > $SESSION_FILE
+  prompt_exited="${PIPESTATUS[2]}" 
+  [ "$prompt_exited" = "1" ] && exit 1 
+}
+
+attempt_login() {
+  handle_attempts
+  request_password
+  is_access_granted || attempt_login
+}
+
+prevent_previous_timeouts() {
+  jobs="$(cat "$JOBS_FILE")"
+  PIFS="$IFS"; IFS=$'\n'; jobs=($jobs); IFS="$PIFS"
+  atrm "${jobs[@]}" 2>/dev/null
+}
+
+set_auth_timeout() {
+  echo "rm $SESSION_FILE" \
+    | at now + "$AUTH_TIMEOUT" minutes 2>&1 \
+    | awk '/job/ {print $2}' >> "$JOBS_FILE"
+}
+
+print_missing_dependency() {
+  echo "[!] ($1) is missing in your OS."
+  exit 1
+}
+
+get_field_from_option() {
+  echo "$1" \
+    | awk '{$1=$2=$NF="";print}' \
+    | awk '{$1=$1};1';
+}
+
+get_id_from_option() {
+  echo "$1" \
+    | grep -oE '\[[a-z0-9]+\]$' \
+    | tr -d '[]$';
+}
+
+show_account_items() {
+  op list items \
+    | jq -r '.[] | "-- \(.overview.title) (\(.overview.ainfo)) [\(.uuid)]"';
+}
+
+show_item_fields() {
+  id="$(get_id_from_option "$1")"
+  item="$(op get item "$id")"
+  details="$(
+    echo "$item" \
+      | jq -r \
+          '.details 
+            | to_entries 
+            | map(select(.value|type=="string" or type=="number") | .key)[]
+          '
+  )"
+  fields="$( echo "$item" | jq -r '.. | objects | .t?, .designation? | strings' )"
+  PIFS=$IFS; IFS=$'\n'; fields=($fields); details=($details); IFS=$PIFS
+  for d in "${details[@]}"; do echo "> Copy $d [$id]"; done
+  for f in "${fields[@]}"; do echo ">> Copy $f [$id]"; done
+}
+
+copy_item_detail() {
+  id="$(get_id_from_option "$1")"
+  detail="$(get_field_from_option "$1")"
+  op get item "$id" \
+    | jq -j --arg d "$detail" '.details[$d]' \
+    | xclip -selection c > /dev/null 2>&1
+}
+
+copy_item_field() {
+  id="$(get_id_from_option "$1")"
+  field="$(get_field_from_option "$1")"
+  op get item "$id" \
+    | jq -j --arg f "$field" \
+        '.. | objects | select(.t==$f or .designation==$f) | .v?, .value? | strings' \
+    | xclip -selection c > /dev/null 2>&1
+}
+
+# DEPENDENCIES-CHECK
+
+[ -z "$(command -v jq)" ] && print_missing_dependency "jq"
+[ -z "$(command -v at)" ] && print_missing_dependency "at"
+[ -z "$(command -v op)" ] && print_missing_dependency "op"
+[ -z "$(command -v xclip)" ] && print_missing_dependency "xclip"
+[ -z "$(command -v pinentry)" ] && print_missing_dependency "pinentry"
+
+# AUTHORIZATION-PROCESS
+
+is_access_granted || attempt_login
+
+# ROFI-HANDLERS
+
+[ -z "$@" ] && show_account_items
+if echo "$1" | grep -Pq '^--'; then show_item_fields "$1"; fi
+if echo "$1" | grep -Pq '^> '; then copy_item_detail "$1"; fi
+if echo "$1" | grep -Pq '^>> '; then copy_item_field "$1"; fi
+
+# DEATHORIZATION-PROCESS
+
+prevent_previous_timeouts
+set_auth_timeout
+
+

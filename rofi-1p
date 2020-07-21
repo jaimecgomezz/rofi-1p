@@ -113,13 +113,14 @@ copy_item_field() {
     | xclip -selection c > /dev/null 2>&1
 }
 
-# DEPENDENCIES-CHECK
+# DEPENDENCIES-CHECK, required only the first time.
+# Uncomment the first time to verify everything its ok.
 
-[ -z "$(command -v jq)" ] && print_missing_dependency "jq"
-[ -z "$(command -v at)" ] && print_missing_dependency "at"
-[ -z "$(command -v op)" ] && print_missing_dependency "op"
-[ -z "$(command -v xclip)" ] && print_missing_dependency "xclip"
-[ -z "$(command -v pinentry)" ] && print_missing_dependency "pinentry"
+# [ -z "$(command -v jq)" ] && print_missing_dependency "jq"
+# [ -z "$(command -v at)" ] && print_missing_dependency "at"
+# [ -z "$(command -v op)" ] && print_missing_dependency "op"
+# [ -z "$(command -v xclip)" ] && print_missing_dependency "xclip"
+# [ -z "$(command -v pinentry)" ] && print_missing_dependency "pinentry"
 
 # AUTHORIZATION-PROCESS
 

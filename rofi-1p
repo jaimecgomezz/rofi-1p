@@ -113,7 +113,8 @@ copy_item_field() {
     | xclip -selection c > /dev/null 2>&1
 }
 
-# DEPENDENCIES-CHECK
+# DEPENDENCIES-CHECK, required only the first time.
+# Comment after the first time to prevent unnecessary checks.
 
 [ -z "$(command -v jq)" ] && print_missing_dependency "jq"
 [ -z "$(command -v at)" ] && print_missing_dependency "at"

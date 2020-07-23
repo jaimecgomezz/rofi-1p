@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Add github files
+
+## [1.0.0] - 2020-07-20
+
+### Added
+
 - Add rofi-1p script alpha version
 
 ### Changed

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Filter empty fields by default
 - Fix CHANGELOG history
+- Update Licence section on README
 
 ## [1.1.1] - 2020-07-23
 

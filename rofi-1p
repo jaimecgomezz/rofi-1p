@@ -87,10 +87,10 @@ show_item_fields() {
       | jq -r \
           '.details 
             | to_entries 
-            | map(select(.value|type=="string" or type=="number") | .key)[]
+            | map(select(.value|.!="" and type=="string" or type=="number") | .key)[]
           '
   )"
-  fields="$( echo "$item" | jq -r '.. | objects | .t?, .designation? | strings' )"
+  fields="$( echo "$item" | jq -r '.. | objects | select(.v!="" and .value!="") | .t?, .designation? | strings' )"
   PIFS=$IFS; IFS=$'\n'; fields=($fields); details=($details); IFS=$PIFS
   for d in "${details[@]}"; do echo "> Copy $d [$id]"; done
   for f in "${fields[@]}"; do echo ">> Copy $f [$id]"; done

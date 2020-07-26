@@ -32,9 +32,7 @@ Inspired by [rofi-1pass](https://github.com/Mange/rofi-lpass) :)
 
 ## Notes
 
-- For the sake of simplicity and performance within the script, `rofi-1p` will, by default, show every field available in the current item, even if its empty. This is worth mentioning in case you are trying to copy a given field and it seems to be doing nothing, please check the field in your account and verify isn’t a bug. 
-
-- The scheduled deauthorization process is for the sake of security, by default the [op](https://support.1password.com/command-line-getting-started/) utility revokes your access after 30 minutes.
+- The scheduled deauthorization process is for the sake of security, so even disabling this feature the [op](https://support.1password.com/command-line-getting-started/) utility revokes your access every 30 minutes.
 
 
 
@@ -143,5 +141,5 @@ Every `PR` is welcomed:)
 
 ## License
 
-Copyright © 2020  [Jaime Castro](https://github.com/jaimecgomezz). Code released under the MIT license.
+Code released under the MIT license.
 

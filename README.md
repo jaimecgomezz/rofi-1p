@@ -141,5 +141,5 @@ Every `PR` is welcomed:)
 
 ## License
 
-Copyright © 2020  [Jaime Castro](https://github.com/jaimecgomezz). Code released under the MIT license.
+Code released under the MIT license.
 

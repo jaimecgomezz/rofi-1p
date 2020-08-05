@@ -44,10 +44,10 @@ Currently there’s no package available, so a manual installation is required.
 
 ### Requirements
 
-- [pinentry](https://www.gnupg.org/related_software/pinentry/index.html), [at](http://manpages.org/at), [jq](https://stedolan.github.io/jq/), [xclip](http://manpages.org/xclip), [op](https://support.1password.com/command-line-getting-started/)
+[pinentry](https://www.gnupg.org/related_software/pinentry/index.html), [at](http://manpages.org/at), [jq](https://stedolan.github.io/jq/), [xclip](http://manpages.org/xclip), [op](https://support.1password.com/command-line-getting-started/)
 
   
-
+### Steps
 1. Install and `login` to your [1password](https://1password.com/) account following the steps described in their page: [Getting started](https://support.1password.com/command-line-getting-started/)
 
 2. Verify you have a `~/.op` folder with a `config` file like these:

@@ -44,15 +44,7 @@ Currently there’s no package available, so a manual installation is required.
 
 ### Requirements
 
-- [pinentry](https://www.gnupg.org/related_software/pinentry/index.html)
-
-- [at](http://manpages.org/at)
-
-- [jq](https://stedolan.github.io/jq/)
-
-- [xclip](http://manpages.org/xclip)
-
-- [op](https://support.1password.com/command-line-getting-started/)
+- [pinentry](https://www.gnupg.org/related_software/pinentry/index.html), [at](http://manpages.org/at), [jq](https://stedolan.github.io/jq/), [xclip](http://manpages.org/xclip), [op](https://support.1password.com/command-line-getting-started/)
 
   
 

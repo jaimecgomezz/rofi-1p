@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+##############################
+# @jaimecgomezz
+#
+# A rofi integration with
+# 1password client
+##############################
+
 MAX_ATTEMPTS=3
 ATTEMPTS_MADE=0
 AUTH_TIMEOUT=10
@@ -90,10 +97,13 @@ show_item_fields() {
             | map(select(.value|.!="" and type=="string" or type=="number") | .key)[]
           '
   )"
-  fields="$( echo "$item" | jq -r '.. | objects | select(.v!="" and .value!="") | .t?, .designation? | strings' )"
+  fields="$(
+    echo "$item" \
+      | jq -r '.. | objects | select(.v!="" and .value!="") | .t?, .designation? | strings'
+  )"
   PIFS=$IFS; IFS=$'\n'; fields=($fields); details=($details); IFS=$PIFS
-  for d in "${details[@]}"; do echo "> Copy $d [$id]"; done
-  for f in "${fields[@]}"; do echo ">> Copy $f [$id]"; done
+  for d in "${details[@]}"; do printf "%-5s %-5s %-10s\n" "> Copy" "$d" "[$id]"; done
+  for f in "${fields[@]}"; do printf "%-5s %-5s %-10s\n" ">> Copy" "$f" "[$id]"; done
 }
 
 copy_item_detail() {
@@ -112,15 +122,6 @@ copy_item_field() {
         '.. | objects | select(.t==$f or .designation==$f) | .v?, .value? | strings' \
     | xclip -selection c > /dev/null 2>&1
 }
-
-# DEPENDENCIES-CHECK, required only the first time.
-# Comment after the first time to prevent unnecessary checks.
-
-[ -z "$(command -v jq)" ] && print_missing_dependency "jq"
-[ -z "$(command -v at)" ] && print_missing_dependency "at"
-[ -z "$(command -v op)" ] && print_missing_dependency "op"
-[ -z "$(command -v xclip)" ] && print_missing_dependency "xclip"
-[ -z "$(command -v pinentry)" ] && print_missing_dependency "pinentry"
 
 # AUTHORIZATION-PROCESS
 

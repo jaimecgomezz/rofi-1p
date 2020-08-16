@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+print_missing_dependency() {
+  echo "[!] ($1) is missing in your OS."
+  exit 1
+}
+
+# DEPENDENCIES-CHECK, required only the first time.
+
+[ -z "$(command -v jq)" ] && print_missing_dependency "jq"
+[ -z "$(command -v at)" ] && print_missing_dependency "at"
+[ -z "$(command -v op)" ] && print_missing_dependency "op"
+[ -z "$(command -v xclip)" ] && print_missing_dependency "xclip"
+[ -z "$(command -v pinentry)" ] && print_missing_dependency "pinentry"
+

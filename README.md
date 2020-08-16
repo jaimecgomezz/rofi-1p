@@ -114,7 +114,7 @@ Currently there’s no package available, so a manual installation is required.
 
 ## Notes
 
-- The `scheduled deauthorization process` emulates the web browser integration (10 minutes). Even if you decide  to disable it, the [op](https://support.1password.com/command-line-getting-started/) client will revoke your access every 30 minutes.
+The `scheduled deauthorization process` emulates the web browser integration (10 minutes). Even if you decide  to disable it, the [op](https://support.1password.com/command-line-getting-started/) client will revoke your access every 30 minutes.
 
 
 

@@ -1,8 +1,6 @@
 # rofi-1p
 
-`rofi-1p` is a [1password](https://1password.com/) integration with [rofi](https://github.com/davatorium/rofi). Its power resides on the ability to scan through all your items no matter the type, allowing you to access not only your `username` and `password` for every account, but your `notes`, `identities`, etc.
-
-Inspired by [rofi-1pass](https://github.com/Mange/rofi-lpass) :)
+`rofi-1p` is a [1password](https://1password.com/) integration with [rofi](https://github.com/davatorium/rofi). Its power resides on the ability to scan through all your items no matter the type, allowing you to access not only your `username` and `password` for every account, but your `notes`, `identities`, etc. Inspired by [rofi-1pass](https://github.com/Mange/rofi-lpass) :)
 
 [![rofi-1p.gif](https://i.postimg.cc/YSrygw8Y/rofi-1p.gif)](https://postimg.cc/68P0Jgkp)
 
@@ -30,14 +28,6 @@ Inspired by [rofi-1pass](https://github.com/Mange/rofi-lpass) :)
 
 
 
-## Notes
-
-- The scheduled deauthorization process is for the sake of security, so even disabling this feature the [op](https://support.1password.com/command-line-getting-started/) utility revokes your access every 30 minutes.
-
-
-
-
-
 ## Installation
 
 Currently there’s no package available, so a manual installation is required.
@@ -46,7 +36,7 @@ Currently there’s no package available, so a manual installation is required.
 
 [pinentry](https://www.gnupg.org/related_software/pinentry/index.html), [at](http://manpages.org/at), [jq](https://stedolan.github.io/jq/), [xclip](http://manpages.org/xclip), [op](https://support.1password.com/command-line-getting-started/)
 
-  
+
 ### Steps
 1. Install and `login` to your [1password](https://1password.com/) account following the steps described in their page: [Getting started](https://support.1password.com/command-line-getting-started/)
 
@@ -72,14 +62,9 @@ Currently there’s no package available, so a manual installation is required.
 3. Download the source code
 
    ```sh
-   git clone https://github.com/jaimecgomezz/rofi-1p.git
+   git clone https://github.com/jaimecgomezz/rofi-1p.git && cd rofi-1p
    ```
 
-4. Access the `rofi-1p` folder
-
-   ```sh
-   cd rofi-1p
-   ```
 
 5. `Symlink` the `rofi-1p` script to some place accessible by your `PATH` variable
 
@@ -96,6 +81,12 @@ Currently there’s no package available, so a manual installation is required.
    export $PATH="$PATH:~/rofi-1p"
    ```
 
+6. Verify you have the required dependencies:
+
+   ```sh
+   ./check # No output means everything ok
+   ```
+
 6. Run [rofi](https://github.com/davatorium/rofi) with `rofi-1p` as a `modi`
 
    ```sh
@@ -108,7 +99,7 @@ Currently there’s no package available, so a manual installation is required.
 
 ## Mods
 
-### Disabling the scheduled deauthorization
+### Disabling the scheduled deauthorization process
 
 ```sh
 # Comment the following lines:
@@ -121,13 +112,15 @@ Currently there’s no package available, so a manual installation is required.
 
 
 
+## Notes
+
+- The `scheduled deauthorization process` emulates the web browser integration (10 minutes). Even if you decide  to disable it, the [op](https://support.1password.com/command-line-getting-started/) client will revoke your access every 30 minutes.
+
 
 
 ## Contributing
 
 Every `PR` is welcomed:)
-
-
 
 
 

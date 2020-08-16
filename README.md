@@ -4,7 +4,7 @@
 
 Inspired by [rofi-1pass](https://github.com/Mange/rofi-lpass) :)
 
-
+[![rofi-1p.gif](https://i.postimg.cc/YSrygw8Y/rofi-1p.gif)](https://postimg.cc/68P0Jgkp)
 
 ## Features
 
